@@ -12,17 +12,21 @@ def win?(first, second)
       (first == 'spock' && second == 'scissors') ||
       (first == 'scissors' && second == 'lizard') ||
       (first == 'lizard' && second == 'paper') ||
-      (first == 'paper' && second == 'spock') 
+      (first == 'paper' && second == 'spock') ||
+      (first == 'lizard' && second == 'spock')
 end
 
 def input_choice(ic)
   letter = case ic
             when 'r'
-             "rock"
+              "rock"
             when 'l'
               "lizard"
             when 'p'
               "paper"
+            when "s"
+              prompt("scissors or spock?")
+              choice = Kernel.gets().chomp()
             end
   letter
 end
@@ -45,13 +49,6 @@ loop do
   	choice = Kernel.gets().chomp()
 
     choice = input_choice(choice)
-
-    if choice = 's'
-      prompt("scissors or spock?")
-      choice = Kernel.gets().chomp()
-    else
-      prompt("not a valid answer")
-    end
 
   	if VALID_CHOICES.include?(choice)
   		break
