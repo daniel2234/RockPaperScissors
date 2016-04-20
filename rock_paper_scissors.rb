@@ -1,3 +1,4 @@
+require 'pry'
 VALID_CHOICES = %W(rock paper scissors spock lizard)
 
 def prompt(message)
@@ -13,7 +14,8 @@ def win?(first, second)
       (first == 'scissors' && second == 'lizard') ||
       (first == 'lizard' && second == 'paper') ||
       (first == 'paper' && second == 'spock') ||
-      (first == 'lizard' && second == 'spock')
+      (first == 'lizard' && second == 'spock') ||
+      (first == 'spock' && second == 'rock')
 end
 
 def input_choice(ic)
@@ -31,6 +33,16 @@ def input_choice(ic)
   letter
 end
 
+def keep_score(player, computer)
+  if win?(player,computer)
+    'player'
+  elsif win?(computer,player)
+    "computer"
+  else
+    "ties"
+  end
+end
+
 
 def display_results(player, computer)
   if win?(player, computer)
@@ -42,9 +54,12 @@ def display_results(player, computer)
   end
 end
 
+computer_score = 0
+player_score = 0
 loop do
   choice = ''
-  loop do 
+  loop do
+
   	prompt("Choose one: #{VALID_CHOICES.join(', ')} (r for rock, p for Paper, l for lizard, s for scissors, s for spock)")
   	choice = Kernel.gets().chomp()
 
@@ -62,6 +77,22 @@ loop do
   Kernel.puts("You chose #{choice}; Computer chose: #{computer_choice}")
 
   display_results(choice,computer_choice)
+
+  if keep_score(choice,computer_choice) == 'player'
+    player_score += 1
+    puts "player_score; #{player_score}"
+  elsif keep_score(choice,computer_choice) == 'computer'
+    computer_score += 1
+    puts "computer_score; #{player_score}"
+  else
+    puts "lets finish this"
+  end
+
+  if computer_score == 5
+    prompt("COMPUTER WINS")
+  elsif player_score == 5
+    prompt("PLAYER WINS")
+  end
 
   prompt("Do you want to play again? (y) ")
   answer = Kernel.gets().chomp()
