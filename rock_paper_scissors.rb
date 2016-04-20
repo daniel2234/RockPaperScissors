@@ -1,4 +1,4 @@
-VALID_CHOICES = %W(rock paper scissors)
+VALID_CHOICES = %W(rock paper scissors spock lizard)
 
 def prompt(message)
 	Kernel.puts("=> #{message}")
@@ -7,8 +7,26 @@ end
 def win?(first, second)
   (first == 'rock' && second == 'scissors') ||
       (first == 'paper' && second == 'rock') ||
-      (first == 'scissors' && second == 'paper')
+      (first == 'scissors' && second == 'paper') ||
+      (first == 'rock' && second == 'lizard') ||
+      (first == 'spock' && second == 'scissors') ||
+      (first == 'scissors' && second == 'lizard') ||
+      (first == 'lizard' && second == 'paper') ||
+      (first == 'paper' && second == 'spock') 
 end
+
+def input_choice(ic)
+  letter = case ic
+            when 'r'
+             "rock"
+            when 'l'
+              "lizard"
+            when 'p'
+              "paper"
+            end
+  letter
+end
+
 
 def display_results(player, computer)
   if win?(player, computer)
@@ -23,8 +41,17 @@ end
 loop do
   choice = ''
   loop do 
-  	prompt("Choose one: #{VALID_CHOICES.join(', ')}")
+  	prompt("Choose one: #{VALID_CHOICES.join(', ')} (r for rock, p for Paper, l for lizard, s for scissors, s for spock)")
   	choice = Kernel.gets().chomp()
+
+    choice = input_choice(choice)
+
+    if choice = 's'
+      prompt("scissors or spock?")
+      choice = Kernel.gets().chomp()
+    else
+      prompt("not a valid answer")
+    end
 
   	if VALID_CHOICES.include?(choice)
   		break
